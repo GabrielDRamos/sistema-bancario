@@ -1,10 +1,12 @@
-import { HttpErrorResponse, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
+import { HttpContextToken, HttpErrorResponse, HttpInterceptorFn, HttpRequest } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth/auth-service';
 import { catchError, switchMap, throwError } from 'rxjs';
 
 
-const RETRY_FLAG = 'x-refresh-tried';
+
+const RETRY_HEADER = 'x-refresh-tried';
+
 
 
 // Helper: adiciona o header Authorization se existir token
@@ -40,7 +42,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
 
       // Evita loop: só tentamos 1x o refresh por requisição
-      const alreadyTried = req.headers.has(RETRY_FLAG);
+      const alreadyTried = req.headers.has(RETRY_HEADER);
       if (alreadyTried) {
         auth.logout(); // sessão realmente inválida
         return throwError(() => error);
@@ -70,7 +72,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
 
           const retried = withAuth(
-            req.clone({ setHeaders: { [RETRY_FLAG]: 'true' } }),
+            req.clone({ setHeaders: { [RETRY_HEADER]: 'true' } }),
             newAccess
           );
 
