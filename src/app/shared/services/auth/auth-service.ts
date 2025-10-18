@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Auth } from '../../models/auth';
@@ -10,8 +10,9 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
   api = `${environment.api}/token/` ;
+   isLogged = signal<boolean>(false);
 
-  constructor(private clienteHttp: HttpClient, private router: Router) { }
+   constructor(private clienteHttp: HttpClient, private router: Router) { }
 
   login(data: Auth) {
     return this.clienteHttp.post(this.api, data).subscribe(
@@ -19,6 +20,7 @@ export class AuthService {
         next: (response: any) => {   
           localStorage.setItem('access_token', response.access);
           localStorage.setItem('refresh_token', response.refresh);
+          this.isLogged.set(true);
           this.router.navigate(['/']);
         },
         error: (error) => {
@@ -47,6 +49,14 @@ export class AuthService {
   logout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    this.isLogged.set(false);
     this.router.navigate(['/auth']);
+  }
+
+  checkAuth() {
+     if (typeof window !== 'undefined' && window.localStorage) {
+      const token = localStorage.getItem('access_token');
+      this.isLogged.set(!!token);
+    }
   }
 }
