@@ -1,5 +1,5 @@
-<div>
-    <div style="margin-bottom: 52px;">
+<div class="container">
+    <div >
         <h1>Login</h1>
         <p class="subtitle">Faça login na área administrativa do sistema. Solicite um acesso à equipe técnica.</p>  
     </div>
@@ -7,16 +7,14 @@
         <form (ngSubmit)="login()" [formGroup]="formGroup">
             <div class="form-login" style="margin-bottom: 40px;">
                 <label for="email">E-mail ou Nome de Usuário</label>
-                <input type="email" id="email" name="email" required formControlName="username">
+                <input type="email" id="email" name="email" required>
             </div>
             <div class="form-login">
                 <label for="password">Senha</label>
-                <input type="password" id="password" name="password" required formControlName="password">
+                <input type="password" id="password" name="password" required>
             </div>
-            <p class="reset_password">Esqueci minha senha</p>
-            <button type="submit" [disabled]="formGroup.invalid">Entrar</button>
         </form>
-    </div>  
+        <p class="reset_password">Esqueci minha senha</p>
+        <button type="submit">Entrar</button>
+    </div>
 </div>
-
-
