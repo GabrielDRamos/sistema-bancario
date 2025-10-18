@@ -6,6 +6,9 @@ import { ListagemCliente } from './pages/cliente/listagem-cliente/listagem-clien
 import { LoginTemplate } from './pages/auth/login-template/login-template';
 import { ListagemConta } from './pages/conta/listagem-conta/listagem-conta';
 import { CadastroConta } from './pages/conta/cadastro-conta/cadastro-conta';
+import { Deposito } from './pages/conta/components/deposito/deposito';
+import { Saque } from './pages/conta/components/saque/saque';
+import { TransferenciaConta } from './pages/conta/components/transferencia/transferencia';
 
 
 
@@ -41,6 +44,18 @@ export const routes: Routes = [
       {
         path: 'editar/:id',
         component: CadastroConta
+      },
+       {
+        path: 'saque',
+        component: Saque
+      },
+      {
+        path: 'deposito',
+        component: Deposito
+      },
+      {
+        path: 'transferencia',
+        component: TransferenciaConta
       },
       {
         path: '',

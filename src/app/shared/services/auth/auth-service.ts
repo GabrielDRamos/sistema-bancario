@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   api = `${environment.api}/token/` ;
 
-  constructor(private clienteHttp: HttpClient, private router: Router,) { }
+  constructor(private clienteHttp: HttpClient, private router: Router) { }
 
   login(data: Auth) {
     return this.clienteHttp.post(this.api, data).subscribe(

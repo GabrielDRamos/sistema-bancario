@@ -25,6 +25,7 @@ export class LoginForm {
 
 
   login() {
+    console.log('oi')
     if (this.formGroup.valid) {
       const data = this.formGroup.value;
       this.authService.login(data) 
